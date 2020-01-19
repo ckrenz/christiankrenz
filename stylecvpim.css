@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css?family=Anton|Titillium+Web:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+/*font-family: 'Anton', sans-serif;
+font-family: 'Titillium Web', sans-serif;
+font-family: 'Lato', sans-serif;*/
+body{
+	margin: 0px;
+	padding: 0px;
+	
+}
+#cv{
+	width: 70vw;
+	margin: auto;
+	box-shadow: 5px 5px 5px black;
+	border: 1px solid black;
+	background: url(images/fondocv.jpg);
+	margin-top: 30px;
+	display: flex;
+	margin-bottom: 	50px;
+}
+
+#titulo{
+	width: 30%;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: #D7D7D7;
+	margin-left: 20px;
+	padding: 5px;
+	text-align: center;
+}
+#titulo h1{
+	font-family: 'Lato', sans-serif;
+	font-size: 3em;
+	padding-top: 0px;
+	margin-top: 10px;
+}	
+#titulo p, #titulo a{
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 1.2em;
+	text-align: center;
+	color: #D7D7D7;
+	text-decoration: none;
+}
+#titulo img{
+	width: 80%;
+	padding-top: 30px;
+
+}
+#habilidades{
+	width: 80%;
+	text-align: left;
+	margin-top: 50px;
+	padding: 0px 20px;
+	color: #D7D7D7;
+}
+#habilidades h3{
+	font-family: 'Lato', sans-serif;
+	font-size: 1.7em;
+	margin: 0px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+#habilidades h4{
+	padding: 5px;
+	margin: 0px;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 1.1em;
+	padding-left: 10px;
+}
+#ingles{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 70%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#portugues{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 50%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#office{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 100%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#pc{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 90%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#photo{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 70%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#ilus{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 80%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#html{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 80%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+#js{
+	background: #FF3A00;
+	margin: 0px 10px;
+	height: 10px;
+	width: 30%;
+	margin-bottom: 5px;
+	border-radius: 2px;
+}
+
+#titulo h5{
+	font-size: 2em;
+	font-family: 'Lato', sans-serif;
+	border: 2px solid #D7D7D7;
+	width: 60%;
+	text-align: center;
+	margin: auto;
+	margin-top: 80px;
+	border-radius: 5px;
+	padding: 5px 0px 7px 0px;
+	transition: background 2s;
+}
+#titulo h5:hover{
+	background: #9C9C9C;
+}
+#titulo i{
+	font-size: 3em;
+	padding: 10px;
+	margin-top: 90px;
+}
+#titulo i:hover{
+	color: white;
+}
+
+#descripcion{
+	width: 70%;
+}
+#objetivos{
+	border-left: 2px solid black;
+	border-bottom : 2px solid black;
+	margin: 0px 30px 0px 50px;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 1em;
+	padding-left: 25px;
+	display: block;
+	padding-top: 1px;
+	margin-top: 0px;
+
+}
+#titleobjetivos{
+	margin: 20px 0px 0px 42px;
+}
+#titleobjetivos span{
+	font-size: 1.5em;
+	padding: 0px;
+	margin: 0px;
+}
+#titleobjetivos h3{
+	display:inline;
+	font-size: 1.5em;
+	padding-left: 15px;
+	font-family: 'Lato', sans-serif;
+}
+#titleestudios{
+	margin: 20px 0px 0px 36px;
+}
+#titleestudios span{
+	font-size: 1.5em;
+	padding: 0px;
+	margin: 0px;
+}
+#titleestudios h3{
+	display:inline;
+	font-size: 1.5em;
+	padding-left: 15px;
+	font-family: 'Lato', sans-serif;
+}
+#estudios{
+	border-left: 2px solid black;
+	border-bottom : 2px solid black;
+	margin: 0px 35px 0px 50px;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 1em;
+	padding-left: 25px;
+	display: block;
+	padding-top: 5px;
+	margin-top: 0px;
+	padding-bottom: 15px;
+}
+#estudios p{
+	font-family: 'Titillium Web', sans-serif;
+	padding: 0px 5px 0px 5px;
+	margin: 0px;
+}
+.punto{
+	width: 15px;
+	height:15px;
+	background: black;
+	border-radius: 50%;
+	position: relative;
+	top: 20px;
+	left: -33px;
+
+}
+#titleexperiencia{
+	margin: 20px 0px 0px 38px;
+}
+#titleexperiencia span{
+	font-size: 1.5em;
+	padding: 0px;
+	margin: 0px;
+}
+#titleexperiencia h3{
+	display:inline;
+	font-size: 1.5em;
+	padding-left: 15px;
+	font-family: 'Lato', sans-serif;
+}
+#experiencia{
+	border-left: 2px solid black;
+	border-bottom : 2px solid black;
+	margin: 0px 35px 0px 50px;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 1em;
+	padding-left: 25px;
+	display: block;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	margin-bottom: 50px;
+
+}
+#experiencia p{
+	font-family: 'Titillium Web', sans-serif;
+	padding: 0px 5px 0px 5px;
+	margin: 0px;
+}
+
+@media only screen and (max-width: 1000px) {
+	#cv{
+		width: 100vw;
+	}
+	#descripcion p{
+		font-size: 0.6em;
+	}
+}

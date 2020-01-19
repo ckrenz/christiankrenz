@@ -1,0 +1,626 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo:400,700,900|Hind+Madurai:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400');
+@font-face{
+	src:url("fonts/AlexBrush-Regular.ttf");
+	src:url("fonts/AlexBrush-Regular.otf");
+	font-family:fuente;
+}
+@font-face{
+	src:url("fonts/pixelada.ttf");
+	font-family:pixelada;
+}
+/*font-family: 'Cairo', sans-serif;
+font-family: 'Hind Madurai', sans-serif;
+font-family: 'Merriweather Sans', sans-serif;*/
+*{
+	padding: 0px;
+	margin: 0px;
+}
+#loading{
+	
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-color: black;
+	text-align: center;
+	padding-top: 45vh;
+	z-index: 150;
+	color: yellow;
+}
+#loading p{
+	font-family: pixelada;
+	font-size: 3em;
+	text-transform: uppercase;
+}
+body{
+	margin:0px;
+	padding:0px;
+	width: 100vw;
+	position: relative;
+}
+header{
+	width: 100vw;
+	height: 80vh;
+}
+header div{
+	display: flex;
+}
+/* NAV */
+nav{
+	width: 100%;
+	height: 10vh;
+	position: fixed;
+	z-index: 90;
+	background-color: rgba(0,0,0,0.9);
+	top: 0;	
+}
+
+nav ul{ 
+	height: 5.2vh;
+	display: flex;
+	justify-content: flex-end;
+
+}
+
+nav li{
+	list-style: none;
+	text-align: center;
+	padding: 0 10px;
+	margin: 0 20px;
+}
+
+nav a{
+	text-decoration: none;
+	color: #ddd;
+	font-family: 'Merriweather Sans', sans-serif;
+	text-transform: uppercase;
+	font-size:1.2em;
+	line-height: 66px;
+	font-weight: 300;
+}
+
+nav a:hover{
+	font-weight: 700;
+}
+nav ul h2{
+	color: #ddd;
+	font-family: fuente;
+	padding-top: 5px;
+	font-size: 2em;
+	position: relative;
+	left: -150%;
+	text-transform: capitalize;
+	font-weight: 400;
+}
+nav ul h2:hover{
+	font-weight: 700;
+}
+
+.aviso{
+	font-size:1.5em;
+	border-bottom: #CC6C19 solid 3px;
+}
+
+/*Portada*/
+
+
+#contenedorimg img{
+	width: 30%;
+	padding-right: 29%;
+	padding-top: 15%;
+}
+#portada{
+	height: 100vh;
+	width: 65vw;
+	padding-top: 8vh;
+	margin: auto;
+	padding-left: 10%;
+}
+
+#portada h1{
+	font-family: fuente;
+	font-size: 7em;
+	display: inline-block;
+	border-bottom: 2px solid #CC6C19;
+	padding-right: 40px;
+}
+#portada h2{
+	font-family: 'Hind Madurai', sans-serif;
+	font-size: 4em;
+	padding-top: 3%;
+	margin-bottom: 3%;
+}
+
+#portada p{
+	font-family: 'Cairo', sans-serif;
+	font-weight: 600;
+	font-size: 1.5em;
+	padding-top: 3%;
+}
+#portada span{
+	font-weight: 900;
+}
+#portada a{
+	font-family: 'Cairo', sans-serif;
+	border: 2px solid black;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 1.6em;
+	color: black;
+	padding: 0px 10px;
+	font-weight: 700;
+	transition: background-color 0.4s, color 0.4s;
+}
+#portada a:hover{
+	background-color: #FF871F;
+	color: white;
+}
+
+main{
+	padding-top: 30vh;
+}
+
+#about{
+	width: 100%;
+	background-color: black;
+	display: flex;		
+}
+
+#about p{
+	font-family: 'Cairo', sans-serif;
+	font-size: 1.6em;
+	color: white;
+	padding: 10% 5% 3% 5%;
+}
+#about a{
+	display: block;
+	text-align: right;
+	padding: 20px 5% 20px 0;
+	font-family: 'Cairo', sans-serif;
+	font-size: 1.6em;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	text-decoration: none;
+	transition: background-color 0.4s;
+}
+#about span{
+	border: 2px white solid;
+	padding: 0px 20px;
+	border-radius: 8px;
+	transition: background-color 0.6s;
+
+}
+#about span:hover{
+		background-color: #CC6C19;
+}
+#about img{
+	width: 25%;
+	padding: 2%;
+	height: 25%;
+}
+#know h4{
+	writing-mode: vertical-lr;
+	transform: rotate(180deg);
+	font-size: 2.6em;
+	font-family: 'Merriweather Sans', sans-serif;
+	color: white;
+}
+#know{
+	padding: 5% 5% 5% 5%;
+	background: url(images/ruido.png), url(images/ruido.png);
+	background-color: black;
+	font-size: 1.6em;
+	font-family: 'Hind Madurai', sans-serif;
+	display: flex;
+	justify-content: space-around;
+	color: white;
+}
+
+#know article{
+	width: 400px;
+	height: 20px;
+	border: 2px #CC6C19 solid;
+	margin-bottom: 2px;
+	border-radius: 3%;
+}
+.photoshop{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 280px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.ilustrator{
+	padding:8px 0px;
+	color:black;
+	box-shadow: 320px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.html{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 350px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.cs3{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 350px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.js{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 320px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.res{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 280px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.creatividad{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 300px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.ganas{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 310px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.superacion{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 180px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.comunicacion{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 180px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.responsabilidad{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 320px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+.dedicacion{
+	padding:8px 10px;
+	color:black;
+	box-shadow: 350px 0px #CC6C19 inset;
+	transition:box-shadow 1s;
+	margin: 2px 0px;
+	border-left: 2px black solid;
+}
+#job{
+	width: 100%;
+}
+#jobs{
+	width: 100%;
+	display: flex;
+	padding: 5% 0;
+	justify-content: space-around;
+}
+#job h3{
+	padding-top: 5%;
+	font-size: 4em;
+	font-family: 'Merriweather Sans', sans-serif;
+	font-weight: 600;
+	color: black;
+	text-align: center;
+}
+#jobs a{
+	width: 30%;
+	height: 50vh;
+	background-color: rgba(204,108,25, 0.9);
+	box-shadow: 2px 2px 10px black;
+	border-radius: 3px;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	transition: transform 0.4s;
+}
+#jobs a:hover{
+	transform: scale(1.02);
+}
+
+#jobs h4{
+	font-size: 2.6em;
+	font-family: 'Hind Madurai', sans-serif;
+	padding-top: 10%;
+}
+#jobs p{
+	font-size: 1.5em;
+	font-family: 'Hind Madurai', sans-serif;
+	text-align: left;
+	padding: 25% 0 0 8%;
+}
+#modalkrz{
+	width: 100%;
+	height: 100%;
+	background-color: rgb(20,20,20);
+	position: absolute;
+	z-index: 100;
+	text-align: center;
+	transition: all 0.2s linear;
+	transform: translateY(-100%);
+	padding-top: 20px;
+	font-family: 'Hind Madurai', sans-serif;
+}
+#modalkrz:target{
+	transform: translateY(0);
+}
+#modalalcala{
+	width: 100%;
+	min-height: 100%;
+	background-color: rgb(20,20,20);
+	position: absolute;
+	z-index: 100;
+	text-align: center;
+	transition: all 0.2s linear;
+	transform: translateY(-100%);
+	padding-top: 20px;
+	font-family: 'Hind Madurai', sans-serif;
+}
+#modalalcala:target{
+	transform: translateY(0);
+}
+#modalambrosia{
+	width: 100%;
+	height: 100%;
+	background-color: rgb(20,20,20);
+	position: absolute;
+	z-index: 100;
+	text-align: center;
+	transition: all 0.2s linear;
+	transform: translateY(-100%);
+	padding-top: 20px;
+	font-family: 'Hind Madurai', sans-serif;
+}
+#modalambrosia:target{
+	transform: translateY(0);
+}
+#krzimagenes{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 50px;
+}
+#krzimagenes img{
+	width: 35%;
+	height: 35%;
+	padding: 3%;
+}
+#modalalcala img{
+	width: 50%;
+	padding-bottom: 50px;
+}
+#modalambrosia img{
+	padding-bottom: 50px;
+}
+
+#modalkrz a, #modalalcala a, #modalambrosia a{
+	width: 50px;
+	font-size: 2em;
+	text-decoration: none;
+	color: #CC6C19;
+	font-family: 'Hind Madurai', sans-serif;
+}
+#modalkrz h6, #modalalcala h6, #modalambrosia h6{
+	padding-right: 5%;
+	font-size: 1em;
+	display: inline-block;
+	position: relative;
+	right: -45%;
+}
+#modalkrz a:hover, #modalalcala a:hover, #modalambrosia a:hover{
+	color: white;
+}
+#modalkrz h4, #modalalcala h4, #modalambrosia h4{
+	color:  rgba(255,255,255, 0.8);
+	font-size: 2.9em;
+	padding-top: 30px;
+}
+#modalkrz p, #modalalcala p, #modalambrosia p{
+	color:  #CC6C19;
+	font-size: 1.5em;
+	padding-top: 20px;
+	color:  rgba(255,255,255, 0.8);
+	padding-bottom: 20px;
+	font-weight: 100;
+}
+
+#modalalcala{
+	height: auto;
+}
+#modalkrz h5, #modalalcala h5{
+	color:  rgba(255,255,255, 0.8);
+	border: 2px solid rgba(255,255,255, 0.8);
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 5px;
+	margin-bottom: 30px;
+	font-size: 0.7em;
+	transition: background-color 0.3s;
+}
+#modalkrz h5:hover, #modalalcala h5:hover{
+	background-color: #CC6C19;
+}
+
+#contact{
+	width: 100%;
+	display: flex;
+}
+
+#contact h3{
+	writing-mode: vertical-lr;
+	transform: rotate(180deg);
+	font-size: 5em;
+	font-family: 'Merriweather Sans', sans-serif;
+	text-align: center;
+	padding: 5%;
+}
+#form{
+	width: 40%;
+	
+}
+.form-consulta{
+		max-width: 500px;  
+		padding: 15px;
+		margin-top: 50px;
+		margin-left: 40px;
+		border-radius: 5px;
+		font-family: 'Hind Madurai', sans-serif;
+		font-size: 1.2em;
+		font-weight: 600;
+	}
+
+.campo-form {
+	width:100%; 
+	height: 30px; 
+	margin:2px 0 6px; 
+	padding-left:6px; 
+	box-sizing: border-box; 
+	border-radius:3px;
+	border:0; 
+	font-size:1em;
+	border: 2px solid black;
+}
+label span {
+	color: #f00
+}
+textarea {
+	min-height: 130px!important;
+}
+.btn-form { 
+	height: 36px; 
+	padding: 0 20px; 
+	border-radius: 6px; 
+	color: black; 
+	text-decoration: none; 
+	display: block;
+	box-shadow: none;
+	background-color: white;
+	border: 2px solid black;
+	font-family: 'Merriweather Sans', sans-serif;
+	font-size: 0.9em;
+	font-weight: 600;
+}
+.btn-form:hover {
+	background: #CC6C19;
+	cursor: pointer;
+	color: white;
+}
+#redes {
+	font-family: 'Cairo', sans-serif;
+	font-size: 1.2em;
+	padding: 6% 8% 0px 8%;
+	width: 30%;
+	text-align: center;
+}
+#redes p{
+	text-align: left;
+}
+#redes h6{
+	font-size: 1.5em;
+	padding-top: 10%;
+	text-align: left;
+	text-decoration: none;
+	color: black;
+}
+#redes a{
+	text-decoration: none;
+}
+#redes i{
+	padding: 3%;
+	font-size: 1.5em;
+	margin-top: 15%;
+	color: black;
+	 border: 2px solid black;
+	width: 25px;
+	height: 25px; 
+	border-radius: 50%;
+}
+#redes i:hover{
+	background-color: #CC6C19;
+	color: white;
+	border: 2px solid white;
+}
+footer{
+	font-family: 'Cairo', sans-serif;
+	font-size: 1.1em;
+	text-align: right;
+	padding-right: 5%;
+	background-color: black;
+	color: white;
+}
+
+@media only screen and (max-width: 1000px) {
+	nav{
+		position: absolute;
+		top: -100px;
+		opacity: 0;
+	}
+	#portada{
+	padding-top: 20vh;
+	width: 90vw;
+	padding-left: 15%;
+	}
+	main{
+		padding-top: 0px;
+	}
+	#about{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: 30px;		
+	}
+	#about img{
+		width: 50%; 		
+	}
+	#know h4{
+	writing-mode: horizontal-tb;
+	transform: rotate(0deg);
+	}
+	#know{
+		padding: 5% 5% 5% 5%;
+		font-size: 1.6em;
+		flex-direction: column;
+		color: white;
+		align-items: center;
+		transition: all 0s;
+	}
+	#jobs a{
+		height: 50%;
+	}
+	#jobs h4{
+		font-size: 2.1em;
+	}
+}
