@@ -460,7 +460,7 @@ main{
 #modalalcala{
 	height: auto;
 }
-#modalkrz h5, #modalalcala h5, #modalambrosiah5{
+#modalkrz h5, #modalalcala h5, #modalambrosia h5{
 	color:  rgba(255,255,255, 0.8);
 	border: 2px solid rgba(255,255,255, 0.8);
 	display: inline-block;
@@ -470,7 +470,7 @@ main{
 	font-size: 0.7em;
 	transition: background-color 0.3s;
 }
-#modalkrz h5:hover, #modalalcala h5:hover{
+#modalkrz h5:hover, #modalalcala h5, #modalambrosia h5:hover{
 	background-color: #CC6C19;
 }
 
