@@ -470,7 +470,7 @@ main{
 	font-size: 0.7em;
 	transition: background-color 0.3s;
 }
-#modalkrz h5:hover, #modalalcala h5, #modalambrosia h5:hover{
+#modalkrz h5:hover, #modalalcala h5:hover, #modalambrosia h5:hover{
 	background-color: #CC6C19;
 }
 
