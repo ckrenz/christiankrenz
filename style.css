@@ -460,7 +460,7 @@ main{
 #modalalcala{
 	height: auto;
 }
-#modalkrz h5, #modalalcala h5{
+#modalkrz h5, #modalalcala h5, #modalambrosiah5{
 	color:  rgba(255,255,255, 0.8);
 	border: 2px solid rgba(255,255,255, 0.8);
 	display: inline-block;
