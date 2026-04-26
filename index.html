@@ -1,203 +1,922 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta charset="utf-8">
-	<title>Christian Krenz</title>
-	
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="efectos.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="animation.js"></script>
-	
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christian Krenz – Automation & Tech Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --teal: #00c2a8;
+    --teal-dim: #00856f;
+    --amber: #f5a623;
+    --white: #f0f4f8;
+    --muted: #8899aa;
+    --card-bg: rgba(17, 34, 64, 0.7);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,194,168,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,194,168,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GLOW ORBS ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(0,194,168,0.15), transparent 70%);
+    top: -100px; left: -100px;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,166,35,0.1), transparent 70%);
+    bottom: 10%; right: -100px;
+    animation: drift 22s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes drift {
+    from { transform: translate(0,0); }
+    to   { transform: translate(40px, 30px); }
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(10,22,40,0.7);
+    border-bottom: 1px solid rgba(0,194,168,0.1);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+  }
+  .hero-inner { max-width: 700px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(0,194,168,0.1);
+    border: 1px solid rgba(0,194,168,0.25);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.25s forwards;
+  }
+  h1 .accent { color: var(--teal); }
+  h1 .line2 { display: block; color: var(--muted); font-size: 0.6em; font-weight: 600; margin-top: 4px; }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: #a0b4c8;
+    max-width: 560px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.55s forwards;
+  }
+
+  .btn-primary {
+    padding: 14px 28px;
+    background: var(--teal);
+    color: var(--navy);
+    border: none;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover {
+    background: #00d4b8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,194,168,0.3);
+  }
+
+  .btn-secondary {
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-2px);
+  }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    padding: 48px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 24px 16px;
+  }
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 0; }
+
+  .section-label {
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--teal);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── APPS GRID ── */
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .app-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .app-card:hover {
+    border-color: rgba(0,194,168,0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+  .app-card:hover::before { opacity: 1; }
+
+  .app-card.in-dev {
+    border-color: rgba(245,166,35,0.2);
+  }
+  .app-card.in-dev::before {
+    background: linear-gradient(90deg, var(--amber), transparent);
+  }
+
+  .app-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 12px;
+  }
+  .app-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--teal);
+    background: rgba(0,194,168,0.1);
+    border-radius: 4px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+  }
+  .app-card.in-dev .app-number {
+    color: var(--amber);
+    background: rgba(245,166,35,0.1);
+  }
+  .app-status {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .status-active {
+    background: rgba(0,194,168,0.1);
+    color: var(--teal);
+    border: 1px solid rgba(0,194,168,0.2);
+  }
+  .status-dev {
+    background: rgba(245,166,35,0.1);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.2);
+  }
+  .app-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .app-desc {
+    font-size: 0.85rem;
+    color: #8899aa;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .app-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 0.7rem;
+    padding: 3px 9px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── STACK ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .stack-item {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+  }
+  .stack-item:hover {
+    border-color: rgba(0,194,168,0.2);
+    transform: translateX(4px);
+  }
+  .stack-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: rgba(0,194,168,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .stack-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+  .stack-cat {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+  }
+  .exp-item {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 10px rgba(0,194,168,0.5);
+  }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 2px;
+  }
+  .exp-company {
+    color: var(--teal);
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+  .exp-period {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: #8899aa;
+    padding-left: 16px;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 0.8rem;
+  }
+
+  /* ── IMPACT ── */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .impact-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s;
+  }
+  .impact-card:hover {
+    border-color: rgba(0,194,168,0.2);
+    transform: translateY(-2px);
+  }
+  .impact-icon { font-size: 1.5rem; margin-bottom: 12px; }
+  .impact-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+  .impact-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    text-align: center;
+    padding: 80px 0 100px;
+  }
+  .contact-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,194,168,0.15);
+    border-radius: 16px;
+    padding: 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,194,168,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  .contact-box h2 { margin-bottom: 12px; }
+  .contact-box p { color: var(--muted); max-width: 480px; margin: 0 auto 32px; }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 24px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .apps-grid, .impact-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .contact-box { padding: 40px 24px; }
+  }
+</style>
 </head>
-
 <body>
-	<div id="loading"><p>loading...</p></div>
-	<div id="modalkrz">
-		<a href="#job"><h6>X</h6></a>
-		<h4>KRZ <br>Car Detail & Accesorios</h4>
-		<p>Página Web <br> Html/Css/Boostrap</p>
-		<a href="https://ckrenz.github.io/krz/" target="blank"><h5>Ir al sitio</h5></a>
-		<div><img src="images/krz1.jpg" width="80%"></div>
-		<div id="krzimagenes">
-			<img src="images/krz2.jpg">
-			<img src="images/krz3.jpg">
-		</div>
-		<a href="#job">cerrar</a>
-	</div>
-	<div id="modalalcala">
-		<a href="#job"><h6>X</h6></a>
-		<h4>Hosteria Alcala</h4>
-		<p>Página Web <br> Html/Css/Boostrap</p>
-		<a href="https://ckrenz.github.io/hosterialcala/" target="blank"><h5>Ir al sitio</h5></a>
-		<div><img src="images/hosteria.jpg"></div>
-		<a href="#job">cerrar</a>
-	</div>
-	<div id="modalambrosia">
-		<a href="#job"><h6>X</h6></a>
-		<h4>Ambrosia Catering</h4>
-		<p>Página Web <br> Html/Css/Boostrap</p>
-		<a href="https://ckrenz.github.io/ambrosiacatering" target="blank"><h5>Ir al sitio</h5></a>
-		<div><img src="images/ambrosia.jpg"></div>
-		<a href="#job">cerrar</a>
-	</div>
-	<nav id="nav">
-	
-		<ul>
-			<a href="#portada"><h2>Christian Krenz</h2></a>
-			<li id="aboutme" class="aviso"><a class="about" href="#about">Sobre mí</a></li>
-			<li id="habilidades"><a href="#know">Habilidades</a></li>
-			<li id="trabajos"><a href="#jobs">Trabajos</a></li>
-			<li id="contacto"><a href="#contact">Contacto</a></li>
-		</ul>
-	</nav>
-	<header>
-	
-	<div>
-		
-		<section id="portada">
-			<h1 class="glitch" data-text="Christian Krenz">Christian Krenz</h1>
-			<p>básicamente... <br> alguien más tratando de dedicarse a <span>hacer lo que le gusta </span>para vivir.</p>
-			<h2>Diseño Páginas Web <br>Front End</h2>
-			<a href="#about">Sobre mí</a>
-		</section>
-	</div>
-		
-	</header>
-	
 
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
-	<main id="main">
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">CK/</a>
+  <ul class="nav-links">
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
 
-		<section id="about">
-			<img src="images/yo.gif" alt="">
-			<div>
-				<p> Luego de transitar por varias ciudades actualmente resido en  Buenos Aires. <br>Desde chico me apasiona diseñar y crear aunque nunca pasó de ser un entretenimiento pero simpre supe que quería hacer del diseño mi profesión, trabajar de lo que tanto me gusta.<i id="know1"></i><br>Para eso me estoy capacitando y estoy realizando proyectos de maquetación web e intento superarme permanentemente.</p>
-			<a  href="cv.html" target="blank"><span>Curriculum Vitae</span></a>
-			</div>
-			
-		</section>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">Disponible para nuevos proyectos</div>
+      <h1>
+        Christian<br><span class="accent">Krenz</span>
+        <span class="line2">Automation & Tech Operations</span>
+      </h1>
+      <p class="hero-desc">
+        10+ años transformando operaciones con tecnología. Diseño e implemento sistemas de automatización end-to-end que reducen hasta un <strong>80% los tiempos operativos</strong> y un <strong>60% los errores administrativos</strong>.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          Contactar
+        </a>
+        <a href="https://linkedin.com/in/christiankrenz" target="_blank" class="btn-secondary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-		<section id="know">
-			<h4>habilidades</h4>
-			<div>
-				<br>
-				<p>Photoshop</p>
-				<article>
-					<div class= "knowp" ></div>
-				</article>
-				<p>Ilustrator</p>
-				<article>
-					<div class= "knowi"></div>
-				</article>
-				<p>Html 5</p>
-				<article>
-					<div class= "knowh"></div>
-				</article>
-				<p>Cs3</p><i id="jobs1"></i>
-				<article>
-					<div class= "knowc"></div>
-				</article>
-				<p>Javascript</p>
-				<article>
-					<div class= "knowj"></div>
-				</article>
-				<p>Diseño Responsive</p>
-				<article>
-					<div class= "knowres"></div>
-				</article>
-			</div>
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Apps desarrolladas</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">80%</div>
+        <div class="stat-label">Reducción tiempos op.</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number">18</div>
+        <div class="stat-label">Colaboradores liderados</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-			<div>
-				<br>
-				<p>jQuery</p>
-				<article>
-					<div class= "knowcreatividad" ></div>
-				</article>
-				<p>Git</p>
-				<article>
-					<div class= "knowganas"></div>
-				</article>
-				<p>Mongodb</p>
-				<article>
-					<div class= "knowsuperacion"></div>
-				</article>
-				<p>Node.js</p>
-				<article>
-					<div class= "knowcomunicacion"></div>
-				</article>
-				<p>Bootstrap</p>
-				<article>
-					<div class= "knowresponsabilidad"></div>
-				</article>
-				<p>ReactJS</p>
-				<article>
-					<div class= "knowdedicacion"></div>
-				</article>	
-			</div>
-				
-		</section>
+<!-- APPS -->
+<section id="apps">
+  <div class="container">
+    <div class="section-label reveal">Portafolio</div>
+    <h2 class="reveal">Soluciones desarrolladas<br>en Grupo Pagos Digitales</h2>
+    <div class="apps-grid">
 
-		<section id="job">
-			<h3>algunos trabajos...</h3>
-			<div id="jobs">
-				<a href="#modalkrz">
-					<h4>KRZ Car Detail</h4>
-					<p>Página Web <br> Html/Css/Boostrap</p>
-				</a>
-				
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">01</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Instalaciones Pagos Digitales</div>
+        <div class="app-desc">Filtrado automático de altas, asignación a instaladores con notificación push, registro con foto, geolocalización y firma digital.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">Google Sheets</span><span class="tag">Geolocalización</span>
+        </div>
+      </div>
 
-				<a href="#modalalcala">
-					<h4>Hosteria Alcalá</h4>
-					<p>Página Web <br> Html/Css/Boostrap/Javascript</p>
-				</a>
-					
-				<a href="#modalambrosia">
-					<h4 id="contact1">Ambrosia Catering</h4>
-					<p>Página Web <br> Html/Sass/Boostrap</p>
-				</a>
-					
-				</article>
-			</div>
-		</section>
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">02</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Pedidos Cliente 1</div>
+        <div class="app-desc">Módulo integrado para gestión de visitas a clientes. Asignación, seguimiento en tiempo real y cierre digital sin costo adicional.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">Google Sheets</span><span class="tag">Notificaciones</span>
+        </div>
+      </div>
 
-		<section id="contact">
-			<h3>contacto</h3>
-			
-			<article id="form">
-				<form action="envia.php" method="post" class="form-consulta"> 
-							<label>Nombre <br>
-								<input type="text" name="nombre"  class="campo-form" required size="35"> <br>
-							</label>
-							<label>Email <br>
-								<input type="email" name="email"  class="campo-form" required size="43"> <br>
-							</label>
-							<label>Consulta <br>
-								<textarea name="consulta" class="campo-form" cols="43"></textarea>
-							</label>
-							<input type="submit" value="Enviar" class="btn-form">
-						</form>
-			</article>
-			<article id="redes">
-				<p>si necesitas contactarme podes hacerlo mediante el formulario o por cualquiera de las redes sociales</p>
-				<a href="mailto:christiankrenz@hotmail.com"><h6>christiankrenz@hotmail.com</h6></a>
-				<a href="http://www.facebook.com/christianadrian.krenz" target="blank"><i class="fab fa-facebook-f"></i></a>
-				<a href="https://www.instagram.com/chris_krenz/" target="blank"><i class="fab fa-instagram"></i></a>
-				<a href="https://www.linkedin.com/in/christiankrenz/"><i class="fab fa-linkedin-in"></i></a>
-				<a href="https://wa.me/5491133923957"><i class="fab fa-whatsapp"></i></a>
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">03</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Servicio Técnico</div>
+        <div class="app-desc">Importa servicios desde CRM, asigna por zona, registra cierre con firma y geolocalización. Envío automático de PDF al cliente por mail.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">CRM</span><span class="tag">PDF automático</span>
+        </div>
+      </div>
 
-			</article>
-	
-			
-		</section>
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">04</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Control de Viáticos</div>
+        <div class="app-desc">Registro de km y geolocalización inmutable por servicio. Reporte PDF diario al cierre de jornada. Elimina el escaneo manual de fin de mes.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">GPS</span><span class="tag">Reportes PDF</span>
+        </div>
+      </div>
 
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">05</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Entrega Tarjetas SUBE</div>
+        <div class="app-desc">Registro digital de remitos con firma. Notificación simultánea automática a todos los involucrados al guardar.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">Firma digital</span><span class="tag">Email automático</span>
+        </div>
+      </div>
 
-	</main>
-	<footer>
-		<p>copyrigth Christian Krenz - christiankrenz@hotmail.com</p>
-	</footer>
-		
+      <div class="app-card reveal">
+        <div class="app-header">
+          <span class="app-number">06</span>
+          <span class="app-status status-active">Activa</span>
+        </div>
+        <div class="app-name">Entregas en Sucursal</div>
+        <div class="app-desc">Control de entregas con detalle, destinatario, timestamp y firma. Notificación automática a jefes de sucursal, logística, compras y administración.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">Multi-área</span><span class="tag">Trazabilidad</span>
+        </div>
+      </div>
 
+      <div class="app-card in-dev reveal">
+        <div class="app-header">
+          <span class="app-number">07</span>
+          <span class="app-status status-dev">En desarrollo</span>
+        </div>
+        <div class="app-name">Alta Integral Pagos Digitales</div>
+        <div class="app-desc">App multi-rol: comercial genera el alta, Riesgos aprueba/rechaza, logística envía POS o conecta con Servicio Técnico. Trazabilidad completa.</div>
+        <div class="app-tags">
+          <span class="tag">AppSheet</span><span class="tag">Multi-rol</span><span class="tag">Workflows</span>
+        </div>
+      </div>
+
+      <div class="app-card in-dev reveal">
+        <div class="app-header">
+          <span class="app-number">08</span>
+          <span class="app-status status-dev">En desarrollo</span>
+        </div>
+        <div class="app-name">Carga de Comprobantes de Depósito</div>
+        <div class="app-desc">Pipeline IA: recibe comprobante por WhatsApp, verifica identidad, detecta adulteraciones con visión artificial, extrae datos y valida duplicados.</div>
+        <div class="app-tags">
+          <span class="tag">n8n</span><span class="tag">WhatsApp API</span><span class="tag">Supabase</span><span class="tag">Claude AI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label reveal">Herramientas</div>
+    <h2 class="reveal">Stack tecnológico</h2>
+    <div class="stack-grid">
+      <div class="stack-item reveal"><div class="stack-icon">⚡</div><div><div class="stack-name">n8n</div><div class="stack-cat">Automatización</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">📱</div><div><div class="stack-name">AppSheet</div><div class="stack-cat">No-code apps</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🗄️</div><div><div class="stack-name">Supabase</div><div class="stack-cat">Base de datos</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">💬</div><div><div class="stack-name">WhatsApp API</div><div class="stack-cat">Mensajería</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🤖</div><div><div class="stack-name">Claude / Groq</div><div class="stack-cat">IA & Visión</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">📊</div><div><div class="stack-name">Looker Studio</div><div class="stack-cat">Dashboards</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🔗</div><div><div class="stack-name">APIs & Webhooks</div><div class="stack-cat">Integración</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">⚙️</div><div><div class="stack-name">Make / Activepieces</div><div class="stack-cat">Automatización</div></div></div>
+      <div class="stack-item reveal"><div class="stack-icon">🟨</div><div><div class="stack-name">JavaScript / Node.js</div><div class="stack-cat">Desarrollo</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="container">
+    <div class="section-label reveal">Trayectoria</div>
+    <h2 class="reveal">Experiencia profesional</h2>
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-role">Jefe de Servicio Técnico, Laboratorio y Logística</div>
+        <div class="exp-company">SEAC S.A. · Automation & Tech Operations</div>
+        <div class="exp-period">Julio 2020 – Actualidad · Buenos Aires, Argentina</div>
+        <ul class="exp-bullets">
+          <li>Liderazgo integral de 3 áreas técnicas y logísticas (18 colaboradores)</li>
+          <li>Digitalización completa del ciclo de servicio técnico end-to-end</li>
+          <li>Desarrollo de 8 apps internas en AppSheet para operaciones de campo</li>
+          <li>Automatización de flujos con n8n: APIs, webhooks, lógica condicional</li>
+          <li>Reducción del 80% en tiempos operativos y 60% en errores administrativos</li>
+          <li>Dashboards ejecutivos en Looker Studio para KPIs y toma de decisiones</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-role">Supervisor de Logística y Laboratorio</div>
+        <div class="exp-company">SEAC S.A.</div>
+        <div class="exp-period">Mayo 2019 – Julio 2020</div>
+        <ul class="exp-bullets">
+          <li>Optimización de procesos logísticos y control de stock</li>
+          <li>Coordinación operativa con áreas técnicas</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-role">Supervisor de Servicio Técnico</div>
+        <div class="exp-company">SEAC S.A.</div>
+        <div class="exp-period">Noviembre 2017 – Mayo 2019</div>
+        <ul class="exp-bullets">
+          <li>Gestión de equipos técnicos de campo y seguimiento de incidencias</li>
+        </ul>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-role">Técnico de Campo</div>
+        <div class="exp-company">SEAC S.A. · POS y equipos electrónicos</div>
+        <div class="exp-period">Enero 2015 – Noviembre 2017</div>
+        <ul class="exp-bullets">
+          <li>Instalación, soporte y mantenimiento de terminales POS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Resultados</div>
+    <h2 class="reveal">Impacto generado</h2>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-icon">❌</div>
+        <div class="impact-title">Cero papel en operaciones</div>
+        <div class="impact-text">Remitos, viáticos y comprobantes de servicio técnico 100% digitales con firma y geolocalización.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-icon">⚡</div>
+        <div class="impact-title">Información en tiempo real</div>
+        <div class="impact-text">Logística, compras y administración reciben datos al instante, sin esperas ni intermediarios.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-icon">📍</div>
+        <div class="impact-title">Trazabilidad total en campo</div>
+        <div class="impact-text">Cada operación registra geolocalización, timestamp y usuario. Historial completo siempre disponible.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-icon">🤖</div>
+        <div class="impact-title">Automatización con IA</div>
+        <div class="impact-text">Bot de WhatsApp con visión artificial procesa comprobantes de depósito eliminando carga manual y errores.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact-section">
+  <div class="container">
+    <div class="contact-box reveal">
+      <div class="section-label" style="justify-content:center">Hablemos</div>
+      <h2>¿Tenés un proceso que<br>querés automatizar?</h2>
+      <p>Estoy disponible para proyectos de automatización, digitalización de operaciones e integraciones con IA.</p>
+      <div class="contact-links">
+        <a href="mailto:christiankrenz@hotmail.com" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          christiankrenz@hotmail.com
+        </a>
+        <a href="https://linkedin.com/in/christiankrenz" target="_blank" class="btn-secondary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="tel:+5491133923957" class="btn-secondary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          11 3392-3957
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Christian Krenz · Villa Crespo, CABA, Argentina · 2025</div>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // stagger siblings
+        const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+        siblings.forEach((el, idx) => {
+          setTimeout(() => el.classList.add('visible'), idx * 80);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
